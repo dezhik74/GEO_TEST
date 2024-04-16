@@ -13,7 +13,7 @@
   <title>Document</title>
 </head>
 <body>
-  <h1> Geolocation test</h1>
+  <h1>Тест геолокации</h1>
   <div id="map"></div>
   <button>Где я?</button>
 </body>
@@ -36,7 +36,7 @@
         fillOpacity: 0.5,
         radius: accuracy
       }).addTo(map);
-      circle.bindPopup(`Ошибка по радиусу: ${accuracy.toFixed(2)} м.`);
+      circle.bindPopup(`Радиус ошибки: ${accuracy.toFixed(2)} м.`);
     })
     
     
