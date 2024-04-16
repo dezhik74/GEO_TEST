@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+  <title>Document</title>
+</head>
+<body>
+  <h1> Geolocation test</h1>
+  <div id="map"></div>
+  <button>Где я?</button>
+</body>
+<script defer>
+  button = document.querySelector('button')
+  var map = L.map('map')
+  button.addEventListener('click', e => {
+    navigator.geolocation.getCurrentPosition(position => {
+      console.log(position)
+      var { latitude, longitude, accuracy } = position.coords
+      map = map.setView([latitude, longitude], 15);
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(map);
+      var marker = L.marker([latitude, longitude]).addTo(map);
+      var circle = L.circle([latitude, longitude], {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5,
+        radius: accuracy
+      }).addTo(map);
+      circle.bindPopup(`Ошибка по радиусу: ${accuracy.toFixed(2)} м.`);
+    })
+    
+    
+  })
+</script>
+<style>
+  #map {
+    height: 500px;
+  }
+</style>
+</html>
